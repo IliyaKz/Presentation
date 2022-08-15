@@ -1,0 +1,261 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Canvas</title>
+
+		<link rel="stylesheet" href="dist/reset.css">
+		<link rel="stylesheet" href="dist/reveal.css">
+		<link rel="stylesheet" href="dist/theme/league.css">
+
+		<!-- Theme used for syntax highlighted code -->
+		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section>
+          <h1>Canvas</h1>
+          <h2 style="font-size: 50px">
+            Iliya Kuznetsov for RSSchool
+          </h2>
+        </section>
+				<section data-auto-animate>
+          <h3 style="font-size: 50px">
+            What is a <span style="color: #13c9de">Canvas</span>?
+          </h3>
+          <div>
+            <div class="fragment" style="text-align: left; font-size: 30px">
+              A <span style="color: #13c9de">canvas</span> is an HTML5 element designed to create a graphic using JavaScript
+            </div>
+            <div class="fragment" style="text-align: left; font-size: 30px">
+              <span style="color: #13c9de">Canvas</span> graphics are raster and typically 2D
+            </div>
+            <div class="fragment" style="text-align: left; font-size: 30px">
+              There are various developments of the 3D version of the API, but at the moment there is no single specification
+            </div>
+          </div>
+        </section>
+        <section style="transform: translateY(-15%);">
+          <h3 style="font-size: 50px">
+            <span style="color: #13c9de">Canvas</span> using for:
+          </h3>
+          <ul style="text-align: left; font-size: 30px">
+            <li class="fragment" style="padding-bottom: 20px;">Data visualization</li>
+            <li class="fragment" style="padding-bottom: 20px;">Diagrams drawing</li>
+            <li class="fragment" style="padding-bottom: 20px;">Animation</li>
+            <li class="fragment" style="padding-bottom: 20px;">Low-level game graphic</li>
+          </ul>
+        </section>
+        <section>
+          <h3 style="font-size: 50px">
+            <span style="color: #13c9de">Canvas</span> vs <span style="color: #9713de">SVG</span>
+          </h3>
+          <div style="display: flex; padding-bottom: 20px;">
+            <div style="display: flex; flex-direction: column; width: 50%;">
+              <div style="padding-bottom: 20px;">Canvas</div>
+              <ul style="align-self: center; font-size: 30px">
+                <li class="fragment" data-fragment-index="0" style="padding-bottom: 20px;">Raster graphic</li>
+                <li class="fragment" data-fragment-index="1" style="padding-bottom: 20px;">High performance</li>
+                <li class="fragment" data-fragment-index="2" style="padding-bottom: 20px;">Image and video support</li>
+                <li class="fragment" data-fragment-index="3" style="padding-bottom: 20px;">Content export</li>
+              </ul>
+            </div>
+            <div style="display: flex; flex-direction: column; width: 50%;">
+              <div style="padding-bottom: 20px;">SVG</div>
+              <ul style="align-self: center; font-size: 30px">
+                <li class="fragment" data-fragment-index="0" style="padding-bottom: 20px;">Vector graphic</li>
+                <li class="fragment" data-fragment-index="1" style="padding-bottom: 20px;">Low performance</li>
+                <li class="fragment" data-fragment-index="4" style="padding-bottom: 20px;">Available for DOM</li>
+                <li class="fragment" data-fragment-index="6" style="padding-bottom: 20px;">CSS-animations</li>
+              </ul>
+            </div>
+          </div>
+          <div class="fragment" data-trim data-noescape data-fragment-index="7" style="font-size: 30px">
+            <span style="color: #9731de">SVG</span> - for icons and other user interface, <span style="color: #13c9de">canvas</span> - for complex graphics and animation
+          </div>
+        </section>
+        <section>
+          <h3 style="font-size: 50px">The element</h3>
+          <pre><code data-line-numbers><canvas width="400" height="400" id="my-canvas"></canvas></code></pre>
+          <ul class="fragment" style="font-size: 30px">
+            <li style="padding-bottom: 20px;">Pair tag</li>
+            <li style="padding-bottom: 20px;">Only two attributes: width ahd height</li>
+          </ul>
+        </section>
+        <section>
+          <h3 style="font-size: 50px">Sizes and grid</h3>
+          <div style="text-align: left; font-size: 30px; padding-bottom: 20px;">
+            <div>
+              Width and height can be set in attributes or css style
+            </div>
+            <div>
+              Important! Any resizing will erase everything drawn on the <span style="color: #13c9de">canvas</span>
+            </div>
+          </div>
+          <div class="fragment" style="text-align: left; font-size: 30px; padding-bottom: 20px;">
+            <div>
+              The origin of the grid is in the upper left corner
+            </div>
+            <div>
+              The coordinate system is the same as the standard browser
+            </div>
+            <div>
+              One grid step is usually equal to one pixel
+            </div>
+          </div>
+        </section>
+        <section>
+          <h3 style="font-size: 50px">Context</h3>
+          <pre style="font-size: 20px"><codes data-trim data-noescape  data-line-numbers>
+            <span style="color: #98e645">const</span> canvas = document.body.<span style="color: #e69345">getElementById('.my-canvas')</span>;
+            <span style="color: #98e645">const</span> ctx = canvas.<span style="color: #e69345">getContext('2d')</span>;
+          </codes></pre>
+          <div style="font-size: 30px">
+            <div>
+              We need a getContext method to access the contents of the <span style="color: #13c9de">canvas</span>. The value is set to 2D
+            </div>
+          </div>
+        </section>
+        <section>
+          <section>
+            <h3 style="font-size: 50px">Shapes. Rectangles</h3>
+            <pre style="font-size: 20px"><codes data-trim data-noescape  data-line-numbers>
+              ctx.<span style="color: #e69345">fillRect(5, 5, 50, 50)</span>;
+
+              ctx.<span style="color: #e69345">strokeRect(20, 20, 100, 100)</span>;
+
+              ctx.fillStyle = 'rgba(233, 75, 144, 0.5)';
+              ctx.<span style="color: #e69345">fillRect(100, 100, 190, 190)</span>;
+            </codes></pre>
+              <div style="font-size: 30px">
+                  The only supported primitive shape is a rectangle. Any other shapes are drawn using paths
+              </div>
+          </section>
+          <section>
+            <h3 style="font-size: 50px">Shapes. Rectangles</h3>
+              <img src="./img/shapes-1.png" alt="shapes">
+          </section>
+          <section>
+            <h3 style="font-size: 50px">Shapes. Paths</h3>
+            <pre style="font-size: 20px"><codes data-trim data-noescape  data-line-numbers>
+              ctx.fillStyle = 'rgb(50, 200, 200)'
+              ctx.<span style="color: #e69345">beginPath()</span>;
+              ctx.<span style="color: #e69345">moveTo(45, 55)</span>;
+              ctx.<span style="color: #e69345">lineTo(155, 25)</span>;
+              ctx.<span style="color: #e69345">lineTo(75, 105)</span>;
+              ctx.<span style="color: #e69345">fill()</span>;
+              
+              ctx.strokeStyle = 'rgb(200, 100, 200)'
+              ctx.<span style="color: #e69345">beginPath()</span>;
+              ctx.<span style="color: #e69345">arc(150, 150, 50, 0, Math.PI * 2, true)</span>;
+              ctx.<span style="color: #e69345">closePath()</span>;
+              ctx.<span style="color: #e69345">stroke()</span>;
+              
+              ctx.fillStyle = 'rgb(200, 70, 00)'
+              ctx.<span style="color: #e69345">beginPath()</span>;
+              ctx.<span style="color: #e69345">arc(270, 270, 50, 0, Math.PI, false)</span>;
+              ctx.<span style="color: #e69345">lineTo(270, 100)</span>;
+              ctx.<span style="color: #e69345">closePath()</span>;
+              ctx.<span style="color: #e69345">fill()</span>;
+            </codes></pre>
+              <div style="font-size: 30px">
+                There are many ways to create forms with path
+              </div>
+          </section>
+          <section>
+            <h3 style="font-size: 50px">Shapes. Paths</h3>
+              <img src="./img/shapes-2.png" alt="shapes">
+          </section>
+        </section>
+        <section>
+          <section>
+            <h3 style="font-size: 50px">Images</h3>
+            <pre style="font-size: 20px"><codes data-trim data-noescape  data-line-numbers>
+              <span style="color: #98e645">const</span> img = new Image();
+              img.src = './assets/img/image.png';
+              img.onload = () => ctx.<span style="color: #e69345">drawImage(img, 25, 25, 350, 350)</span>;
+            </codes></pre>
+            <div style="font-size: 30px; padding-bottom: 20px;">
+              <span style="color: #13c9de">Canvas</span> can use external images as a source. It supports data types like HTMLImageElement, HTMLVideoElement, HTMLCanvasElement
+            </div>
+            <div style="font-size: 30px">
+              The drawImage() method is used to draw an image
+            </div>
+          </section>
+          <section>
+            <h3 style="font-size: 50px">Images</h3>
+            <img src="./img/image.png" alt="image">
+          </section>
+        </section>
+        <section>
+          <section>
+            <h3 style="font-size: 50px">Animation</h3>
+            <div style="font-size: 30px">
+              You can animate any drawn object, for example, a simple circle
+            </div>
+            <pre style="font-size: 20px"><codes data-trim data-noescape  data-line-numbers>
+              function draw(x, y) {
+                ctx.fillStyle = 'rgb(200, 100, 200)'
+                ctx.<span style="color: #e69345">beginPath()</span>;
+                ctx.<span style="color: #e69345">arc(x, y, 5, 0, Math.PI * 2, true)</span>;
+                ctx.<span style="color: #e69345">closePath()</span>;
+                ctx.<span style="color: #e69345">fill()</span>;
+              }
+            </codes></pre>
+          </section>
+          <section>
+            <h3 style="font-size: 50px">Animation</h3>
+            <div style="font-size: 30px">
+              To create an animation, the <span style="color: #13c9de">canvas</span> is cleared, after which the updated content is drawn on it. It repeats every frame
+            </div>
+            <pre style="font-size: 20px"><codes data-trim data-noescape  data-line-numbers>
+              <span style="color: #98e645">let</span> a = 200; b = 5, dx = 2, dy = 2;
+              
+              function <span style="color: #e69345">animate()</span> {
+                <span style="color: #e69345">ctx.clearRect(0, 0, 400, 400)</span>;
+                if ((a + dx) >= 395 || (a + dx) <= 5) {
+                  dx = -dx;
+                }
+                if ((b + dy) > 395 || (b + dy) < 5) {
+                  dy = - dy;
+                }
+                a += dx;
+                b += dy;
+                <span style="color: #e69345">draw(a, b)</span>;
+                <span style="color: #e69345">window.requestAnimationFrame(animate)</span>;
+              }
+            </codes></pre>
+          </section>
+          <section>
+            <h3 style="font-size: 50px">Animation</h3>
+            <video data-autoplay loop data-paused-by-reveal>
+              <source src="./img/videoAnimation.mp4">
+            </video>
+          </section>
+        </section>
+        <section>
+          <h2 style="font-size: 50px">Thank you!</h2>
+        </section>
+			</div>
+		</div>
+
+		<script src="dist/reveal.js"></script>
+		<script src="plugin/notes/notes.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
+		<script src="plugin/highlight/highlight.js"></script>
+		<script>
+			// More info about initialization & config:
+			// - https://revealjs.com/initialization/
+			// - https://revealjs.com/config/
+			Reveal.initialize({
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealMarkdown, RevealHighlight, RevealNotes ]
+			});
+		</script>
+	</body>
+</html>
