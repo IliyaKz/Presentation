@@ -62,10 +62,10 @@ export const KaTeX = () => {
 			let baseUrl = options.local || 'https://cdn.jsdelivr.net/npm/katex';
 			let versionString = options.local ? '' : '@' + options.version;
 
-			let cssUrl = baseUrl + versionString + '/dist/katex.min.css';
-			let katexUrl = baseUrl + versionString + '/dist/katex.min.js';
-			let mhchemUrl = baseUrl + versionString + '/dist/contrib/mhchem.min.js'
-			let karUrl = baseUrl + versionString + '/dist/contrib/auto-render.min.js';
+			let cssUrl = baseUrl + versionString + '/distFolder/katex.min.css';
+			let katexUrl = baseUrl + versionString + '/distFolder/katex.min.js';
+			let mhchemUrl = baseUrl + versionString + '/distFolder/contrib/mhchem.min.js'
+			let karUrl = baseUrl + versionString + '/distFolder/contrib/auto-render.min.js';
 
 			let katexScripts = [katexUrl];
 			if(options.extensions && options.extensions.includes("mhchem")) {
